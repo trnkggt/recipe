@@ -1,0 +1,46 @@
+{% extends 'Base/main.html' %}
+
+{% block content %}
+
+<style>
+.flexrow { display: flex;
+           border: 2px black;
+}
+.flexrow > div { flex: 1; }
+
+.infocell {
+  border: 2px solid blue;
+  border-radius: 5px 25px;
+  background-color: white;
+  padding: 5px;
+  margin: 20px 5px 5px 5px;
+}
+</style>
+  <div class="" >
+    <div class="infocell" >
+      <p>Profile</p>
+      <p>
+          <img src="{{MEDIA_URL}}/{{user.image}}" class="rounded-circle" style="width:100px;"> <br>
+          Username: {{ user.username }} <br>
+          Name: {{ user.first_name }} {{ user.last_name }}<br>
+          Date Joined: {{ user.created }} <br>
+          Email: {{ user.email }}<br>
+          Last Login: {{ user.user.last_login }}<br>
+          <a class="btn btn-outline-primary" href="{% url 'profile_edit' %}">Edit Profile</a>
+      </p>
+    </div>
+
+    <div class="infocell" >
+          <p>Viewed Recipes</p>
+          <p>
+          {% for recipe_id, recipe_title in request.session.viewed_recipes %}
+          <a href="/details/{{ recipe_id }}">{{recipe_title }}</a><br>
+          {% empty %}
+                No recently viewed recipes found.
+          {% endfor %}
+          </p>
+        </div>
+  </div>
+
+
+{% endblock %}

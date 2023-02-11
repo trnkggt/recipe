@@ -1,0 +1,34 @@
+{% extends "Base/main.html" %}
+{% load static %}
+{% block content %}
+  <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="card-body p-5 text-center">
+          <div class="form-outline mb-4">
+                            {{ form.title }}
+                            {{ form.title.errors }}
+          </div>
+          <div class="form-outline mb-4">
+                            {{ form.content }}
+                            {{ form.content.errors }}
+          </div>
+          <div class="form-outline mb-4">
+                            {{ form.short_description }}
+                            {{ form.short_description.errors }}
+          </div>
+          <div class="form-outline mb-4">
+                            {{ form.dish_type }}
+                            {{ form.dish_type.errors }}
+          </div>
+          <div class="form-outline mb-4">
+                            {{ form.image }}
+                            {{ form.image.errors }}
+          </div>
+
+          <input type="submit"  class="btn btn-primary btn-lg btn-block" value="Save">
+      </div>
+
+
+  </form>
+
+{% endblock %}

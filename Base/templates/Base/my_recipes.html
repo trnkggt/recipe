@@ -1,0 +1,31 @@
+{% extends 'Base/main.html' %}
+
+{% block content %}
+    <div class="container">
+    {% if message %}
+        <h1 style="text-align:center">{{ message }}</h1>
+    {% endif %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for recipe in recipes %}
+      <div class="col">
+        <div class="card">
+          <a href="{% url 'recipe_details' recipe.pk %}"><img src="{{ MEDIA_URL }}/{{recipe.image}}"  style="max-height: 450px; max-width: 750px;" class="card-img-top"
+            alt=".." /> </a>
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.title }}</h5>
+            <p class="card-text">
+              {{ recipe.short_description }}
+                <a onclick="return confirm('Are you sure you want to delete?')" class="btn btn-outline-primary float-end" href="{% url 'recipe_delete' recipe.pk %}">Delete</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+        <a href="{% url 'recipe_create' %}" class="btn btn-outline-primary"  style="text-align:center; margin: 15px;">Add a new recipe here</a>
+    </div>
+<script>
+
+</script>
+{% endblock %}

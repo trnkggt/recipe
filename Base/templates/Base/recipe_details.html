@@ -1,0 +1,69 @@
+{% extends 'Base/main.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="text-center">{{recipe.title}}</h1>
+    <div class="row text-center">
+        <div class="col-md-6">
+            <img class="" src="{{MEDIA_URL}}/{{recipe.image}}" width="300px">
+            <h3 class="text-center">By: {{recipe.user}}</h3>
+        </div>
+        <div class="col-md-6">
+            <p> {{ recipe.content }}</p>
+        </div>
+    </div>
+    <h3>Comment Section</h3>
+    {% if comments %}
+      <section >
+                            <a type="btn btn-primary" href="{% url 'comment_create' recipe.pk %}">Add Comment</a>
+
+
+          <div class="container my-5 py-5">
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-12 col-lg-10">
+                <div class="card text-dark">
+
+                    <h4 class="mb-0">Recent comments</h4>
+                    {% for comment in comments %}
+                    <div class="card-body p-4">
+                    <div class="d-flex flex-start">
+                      <img class="rounded-circle shadow-1-strong me-3"
+                        src="{{MEDIA_URL}}/{{comment.user.image}}" alt="avatar" width="60"
+                        height="60" />
+                      <div>
+                        <h6 class="fw-bold mb-1">{{ comment.user }}</h6>
+                        <div class="d-flex align-items-center mb-3">
+                          <p class="mb-0">
+                            {{ comment.created }}
+                          </p>
+
+                        </div>
+                        <p class="mb-0">
+                          {{ comment.content }}
+                        </p>
+                          {% if comment.user == request.user.profile %}
+                            <div>
+                                <a href="{% url 'comment_edit' comment.pk %}">Edit</a>
+                                <a onclick="return confirm('Are you sure you want to delete?')" href="{% url 'comment_delete' comment.pk %}">Delete</a>
+                            </div>
+                          {% endif %}
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr class="my-0" style="height: 1px;" />
+                    {% endfor %}
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+                {% else %}
+                <h3>There are no comments</h3>
+                  <a type="btn btn-primary" href="{% url 'comment_create' recipe.pk %}">Add Comment</a>
+                {% endif %}
+        </section>
+        </div>
+
+{% endblock %}

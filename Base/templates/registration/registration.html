@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load django_bootstrap5 %}
+
+{% bootstrap_css %}
+
+{% bootstrap_javascript %}
+
+{% bootstrap_messages %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <section class="vh-100" style="background-color: #508bfc;">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                  <div class="card-body p-5 text-center">
+
+                    <h3 class="mb-5">Sign in</h3>
+
+                    <div class="form-outline mb-4">
+                        {{ form.username }}
+                        {{ form.username.errors }}
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        {{ form.password1 }}
+                        {{ form.password1.errors }}
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        {{ form.password2 }}
+                        {{ form.password2.errors }}
+                    </div>
+
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Registrate</button>
+
+                    <hr class="my-4">
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+    </form>
+</div>
+</body>
+</html>

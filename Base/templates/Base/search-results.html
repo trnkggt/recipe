@@ -1,0 +1,28 @@
+{% extends 'Base/main.html' %}
+
+{% block content %}
+  {% if recipes %}
+      <h1 style="text-align:center;">You Searched For: {{ searched }}</h1>
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+          {% for recipe in recipes %}
+          <div class="col">
+            <div class="card">
+              <a href="{% url 'recipe_details' recipe.pk %}"><img src="{{ MEDIA_URL }}/{{recipe.image}}"  style="max-height: 450px; max-width: 750px;" class="card-img-top"
+                alt=".." /> </a>
+              <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text">
+                  {{ recipe.short_description }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
+        </div>
+    {% else %}
+        <h1 style="text-align:center; padding-top: 50px;">We couldn't find anything relevant. Try different word</h1>
+    {%  endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load django_bootstrap5 %}
+
+{% bootstrap_css %}
+
+{% bootstrap_javascript %}
+
+{% bootstrap_messages %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+      a{
+        text-decoration: none;
+      }
+    </style>
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'profile' %}">My Profile</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'get_by_type' 'Breakfast' %}">Breakfast</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'get_by_type' 'Lunch' %}">Lunch</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'get_by_type' 'Dinner' %}" tabindex="-1" aria-disabled="true">Dinner</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'my_recipes' %}" tabindex="-1" aria-disabled="true">My Recipes</a>
+        </li>
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Log Out</a>
+          </li>
+          <li>
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              notifications
+            </a>
+            <div  class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              {% if notifications %}
+                {% for notification in notifications %}
+                  <div>
+                    <a href="{% url 'from_notification' notification.post.pk notification.pk %}">{{ notification.message }}</a>
+                  </div>
+                  <br>
+                {% endfor %}
+              {% else %}
+                <p>No New notification</p>
+              {% endif %}
+            </div>
+          </div>
+        </li>
+        {% else %}
+          <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Log In</a>
+          </li>
+        {% endif %}
+
+
+      </ul>
+      <form class="d-flex" method="POST" action="{% url 'search_bar' %}">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+    {% block content %}
+        {% endblock %}
+
+</body>
+</html>
